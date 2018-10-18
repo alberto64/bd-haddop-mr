@@ -15,7 +15,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class CountKeywordsPerTweet {
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
-            System.err.println("Usage: CountTotalKeywords <input path> <output path>");
+            System.err.println("Usage: RepliesPerTweet <input path> <output path>");
             System.exit(-1);
         }
 
