@@ -1,4 +1,4 @@
-package repliespertweet;
+package countuniqueusers;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -14,14 +14,12 @@ import java.io.IOException;
 /**
  * Created by ubuntu on 2/6/17.
  */
-public class RepliesPerTweetMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class CountUniqueUsersMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
     @Override
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
         String tweet = value.toString();
-        int index = tweet.indexOf("\"reply_count\":");
-        int reply_Count = Integer.getInteger(String.valueOf(tweet.charAt(index + 15)));
         Status status = null;
         try {
             status = TwitterObjectFactory.createStatus(tweet);
@@ -29,6 +27,6 @@ public class RepliesPerTweetMapper extends Mapper<LongWritable, Text, Text, IntW
             e.printStackTrace();
         }
         if(status == null) { return; }
-        context.write(new Text(String.valueOf(status.getId())), new IntWritable(reply_Count));
+        context.write(new Text(status.getUser().getName()), new IntWritable(1));
     }
 }
